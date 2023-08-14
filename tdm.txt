@@ -1,0 +1,62 @@
+import java.util.*;
+public class Main{
+    public static void main(String[] args) {
+    // int input_time[], remaining_time[], total_time[], waiting_time[];
+    int time=0;
+    
+    int[] input_time = new int[10];
+    int[] remaining_time = new int[10];
+    int[] total_time = new int[10];
+    int[] waiting_time = new int[10];
+    
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Enter the total packets");
+    int n = sc.nextInt();
+    
+    System.out.println("Enter the input timing for each packet");
+    for(int i=0; i<n; i++){
+        System.out.print("S"+i+" = ");
+        input_time[i] = sc.nextInt();
+        remaining_time[i] = input_time[i];
+    }
+    
+    System.out.println("Enter frame size");
+    int frame_size = sc.nextInt();
+    int count = 0;
+    while(true){
+        count = 0;
+        for(int i=0; i<n; i++){
+            
+            int temp = frame_size;
+            
+            if(remaining_time[i] == 0){
+                count++;
+                continue;
+            }
+            if(remaining_time[i] > frame_size){
+                remaining_time[i] -= frame_size;        
+            }
+            else{
+                if(remaining_time[i] > 0){
+                temp = remaining_time[i];
+                remaining_time[i] = 0;
+            }
+        }
+            
+            time = time + temp;
+
+            total_time[i] = time;
+            
+            
+        }
+        if(n == count){ //imp
+                break;
+        }
+    }
+    System.out.println("station\tprocessing time \t completion time \t waiting time\n");
+    for(int i=0; i<n; i++){
+        waiting_time[i] = total_time[i] - input_time[i]; 
+        System.out.print("\n"+(i+1)+" \t"+input_time[i]+"\t"+total_time[i]+"\t "+waiting_time[i]+"\n");
+    }
+    }
+}
